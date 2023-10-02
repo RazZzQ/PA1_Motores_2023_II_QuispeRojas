@@ -61,6 +61,7 @@ public class HealthBarController : MonoBehaviour
             UpdateHealth(20);
         }else if(Input.GetMouseButtonDown(1)){
             UpdateHealth(-20);
+            ScreenShake.Instance.ShakeCamera(1.5f, 0.5f);
             if (currentValue == 0)
             {
                 Destroy(gameObject);
