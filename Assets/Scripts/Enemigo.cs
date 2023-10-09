@@ -11,6 +11,7 @@ public class Enemigo : MonoBehaviour
     private bool enMovimiento;
     private Vector2 destino;
     private Rigidbody2D rb2d;
+    public int nivelesOtorgados = 1;
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();

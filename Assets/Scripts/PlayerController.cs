@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     [SerializeField] private Rigidbody2D myRBD2;
     [SerializeField] private float velocityModifier = 5f;
     [SerializeField] private float rayDistance = 10f;
@@ -46,8 +47,6 @@ public class PlayerController : MonoBehaviour
             {
                 ShootTriple(shootDirection);
             }
-            DerrotarEnemigo();
-
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -74,7 +73,27 @@ public class PlayerController : MonoBehaviour
             Destroy(bullet, 2.0f);
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EnemyBullet"))
+        {
+            int damage = 10; // Ajusta esto según sea necesario
 
+            // Actualizar la salud del jugador y aplicar sacudida de pantalla
+            HealthBarController playerHealthBar = HealthBarController.GetInstance();
+            playerHealthBar.UpdateHealth(-damage);
+            ScreenShake.instance.shakecamera(5f, 1f);
+        }
+        
+    }
+    public void AumentarNivel(int nivelGanado)
+    {
+        if (jugadorNivel < 4)
+        {
+            jugadorNivel += nivelGanado;
+            ActualizarTextoNivel(); // Actualiza el Texto del nivel cuando subes de nivel
+        }
+    }
     private void CheckFlip(float x_Position){
         spriteRenderer.flipX = (x_Position - transform.position.x) < 0;
     }
@@ -82,14 +101,5 @@ public class PlayerController : MonoBehaviour
     {
         nivelText.text = "Nivel del jugador: " + jugadorNivel;
     }
-
-    // Función para derrotar un enemigo y subir de nivel (máximo 3 niveles)
-    private void DerrotarEnemigo()
-    {
-        if (jugadorNivel < 3)
-        {
-            jugadorNivel++;
-            ActualizarTextoNivel(); // Actualiza el Texto del nivel cuando subes de nivel
-        }
-    }
+    
 }

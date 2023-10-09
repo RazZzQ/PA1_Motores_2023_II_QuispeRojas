@@ -8,7 +8,7 @@ public class EnemyDispara : MonoBehaviour
     public Transform puntoDeDisparo;
     public float velocidadProyectil = 10f;
     public Transform jugador;
-
+    public int nivelesOtorgados = 2;
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")

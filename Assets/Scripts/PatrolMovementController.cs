@@ -15,6 +15,7 @@ public class PatrolMovementController : MonoBehaviour
     private bool playerInSight = false;
     private float originalVelocityModifier;
     private float raycastDistance = 5f;
+    public int nivelesOtorgados = 1;
     private void Start() {
         currentPositionTarget = checkpointsPatrol[patrolPos];
         transform.position = currentPositionTarget.position;

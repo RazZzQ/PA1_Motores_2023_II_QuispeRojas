@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 public class HealthBarController : MonoBehaviour
 {
     [SerializeField] private int maxValue;
-    [Header("Health Bar Visual Components")] 
+    [Header("Health Bar Visual Components")]
     [SerializeField] private RectTransform healthBar;
     [SerializeField] private RectTransform modifiedBar;
     [SerializeField] private float changeSpeed;
@@ -16,65 +16,78 @@ public class HealthBarController : MonoBehaviour
 
     private int currentValue { get; set; }
     private float _fullWidth;
-    private float TargetWidth => currentValue * _fullWidth / maxValue;
+    private float TargetWidth => (float)currentValue * _fullWidth / maxValue;
     private Coroutine updateHealthBarCoroutine;
 
-    private void Start() {
+    private static HealthBarController instance;
+
+    private void Start()
+    {
         currentValue = maxValue;
         _fullWidth = healthBar.rect.width;
+        instance = this; // Configura el singleton
+    }
+
+    public static HealthBarController GetInstance()
+    {
+        return instance;
     }
 
     /// <summary>
-    /// Metodo <c>UpdateHealth</c> actualiza la vida del personaje de manera visual. Recibe una cantidad de vida modificada.
+    /// Método <c>UpdateHealth</c> actualiza la vida del personaje de manera visual. Recibe una cantidad de vida modificada.
     /// </summary>
-    /// <param name="amount">El valor de vida modificada.</param>
-    public void UpdateHealth(int amount){
+    /// <param name="amount">El valor de vida modificada. Puede ser positivo o negativo.</param>
+    public void UpdateHealth(int amount)
+    {
         currentValue = Mathf.Clamp(currentValue + amount, 0, maxValue);
 
-        if(updateHealthBarCoroutine != null){
+        if (updateHealthBarCoroutine != null)
+        {
             StopCoroutine(updateHealthBarCoroutine);
         }
         updateHealthBarCoroutine = StartCoroutine(AdjustWidthBar(amount));
+
+        if (currentValue <= 0)
+        {
+            Die();
+        }
     }
 
-    IEnumerator AdjustWidthBar(int amount){
+    IEnumerator AdjustWidthBar(int amount)
+    {
         RectTransform targetBar = amount >= 0 ? modifiedBar : healthBar;
         RectTransform animatedBar = amount >= 0 ? healthBar : modifiedBar;
 
-        targetBar.sizeDelta = SetWidth(targetBar,TargetWidth);
+        targetBar.sizeDelta = SetWidth(targetBar, TargetWidth);
 
-        while(Mathf.Abs(targetBar.rect.width - animatedBar.rect.width) > 1f){
-            animatedBar.sizeDelta = SetWidth(animatedBar,Mathf.Lerp(animatedBar.rect.width, TargetWidth, Time.deltaTime * changeSpeed));
+        while (Mathf.Abs(targetBar.rect.width - animatedBar.rect.width) > 1f)
+        {
+            animatedBar.sizeDelta = SetWidth(animatedBar, Mathf.Lerp(animatedBar.rect.width, TargetWidth, Time.deltaTime * changeSpeed));
             yield return null;
         }
 
-        animatedBar.sizeDelta = SetWidth(animatedBar,TargetWidth);
+        animatedBar.sizeDelta = SetWidth(animatedBar, TargetWidth);
     }
 
-    private Vector2 SetWidth(RectTransform t, float width){
+    private Vector2 SetWidth(RectTransform t, float width)
+    {
         return new Vector2(width, t.rect.height);
     }
 
-    private void Update() {
-
-        if(Input.GetMouseButtonDown(0)){
-            UpdateHealth(20);
-        }else if(Input.GetMouseButtonDown(1)){
-            UpdateHealth(-20);
-            ScreenShake.instance.shakecamera(5f, 1f);
-            if (currentValue == 0)
+    private void Die()
+    {
+        // Si el objeto con este script es el jugador, destruirlo
+        if (gameObject.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+            if (lifetext != null)
             {
-                Destroy(gameObject);
-                Perder();
+                lifetext.text = "zZz perdiste";
             }
         }
-    }
-    private void Perder()
-    {
-        if(lifetext != null)
+        else if (gameObject.gameObject.tag == "EnemyBullet")
         {
-            lifetext.text = "zZz perdiste";
+            Destroy(gameObject);
         }
     }
-
 }
