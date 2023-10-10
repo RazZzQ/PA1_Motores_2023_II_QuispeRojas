@@ -75,12 +75,11 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("EnemyBullet"))
+        if (collision.gameObject.tag=="EnemyBullet")
         {
-            int damage = 10; // Ajusta esto según sea necesario
+            int damage = 10; 
 
-            // Actualizar la salud del jugador y aplicar sacudida de pantalla
-            HealthBarController playerHealthBar = HealthBarController.GetInstance();
+            HealthBarController playerHealthBar = HealthBarController.Instance;
             playerHealthBar.UpdateHealth(-damage);
             ScreenShake.instance.shakecamera(5f, 1f);
         }
@@ -91,7 +90,7 @@ public class PlayerController : MonoBehaviour
         if (jugadorNivel < 4)
         {
             jugadorNivel += nivelGanado;
-            ActualizarTextoNivel(); // Actualiza el Texto del nivel cuando subes de nivel
+            ActualizarTextoNivel(); 
         }
     }
     private void CheckFlip(float x_Position){

@@ -4,28 +4,27 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private int damage = 10; // Cantidad de daño que inflige el enemigo al jugador
+    [SerializeField] private int damage = 10; 
 
-    private HealthBarController playerHealthBar; // Referencia a la barra de salud del jugador
+    private HealthBarController playerHealthBar; 
 
-    private static EnemyController instance; // Singleton de EnemyController
+    private static EnemyController instance; 
 
     private void Awake()
     {
-        instance = this; // Configura el singleton
+        instance = this; 
     }
 
     public static EnemyController GetInstance()
     {
-        return instance; // Función para acceder al singleton desde otros scripts
+        return instance; 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag =="Bullet")
         {
-            // Llama a la función UpdateHealth en la barra de salud del jugador para hacerle daño
-            HealthBarController enemyHealthBar = HealthBarController.GetInstance();
+            HealthBarController enemyHealthBar = HealthBarController.Instance;
             enemyHealthBar.UpdateHealth(-damage);
         }
     }
