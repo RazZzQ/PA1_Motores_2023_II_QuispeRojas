@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 820599}
   - component: {fileID: 820602}
   - component: {fileID: 820601}
-  - component: {fileID: 820600}
+  - component: {fileID: 820603}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -163,21 +163,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &820600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 820598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecbc1462945ea4e4eac69060b409670b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxValue: 100
-  currentValue: 100
-  lifetext: {fileID: 0}
 --- !u!114 &820601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +201,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 820598}
   m_CullTransparentMesh: 1
+--- !u!114 &820603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbc1462945ea4e4eac69060b409670b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxValue: 100
+  healthBar: {fileID: 807356923}
+  modifiedBar: {fileID: 1843686837}
+  changeSpeed: 1
+  lifetext: {fileID: 1359841143}
 --- !u!1 &214855220
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,9 +454,11 @@ GameObject:
   - component: {fileID: 445670373}
   - component: {fileID: 445670374}
   - component: {fileID: 445670372}
+  - component: {fileID: 445670375}
+  - component: {fileID: 445670377}
   m_Layer: 0
   m_Name: Wizard
-  m_TagString: EnemyBullet
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -654,6 +658,68 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+--- !u!61 &445670375
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445670366}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.5, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.88, y: 3.38}
+    newSize: {x: 3.88, y: 3.38}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.84, y: 3.18}
+  m_EdgeRadius: 0
+--- !u!114 &445670377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445670366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbc1462945ea4e4eac69060b409670b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxValue: 100
+  healthBar: {fileID: 1868461115}
+  modifiedBar: {fileID: 563690921}
+  changeSpeed: 1
+  lifetext: {fileID: 1359841143}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,7 +858,7 @@ GameObject:
   - component: {fileID: 527771332}
   m_Layer: 0
   m_Name: Scorpion
-  m_TagString: EnemyBullet
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1160,8 +1226,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 100
-  currentValue: 100
-  lifetext: {fileID: 0}
+  healthBar: {fileID: 1173509517}
+  modifiedBar: {fileID: 2099271585}
+  changeSpeed: 1
+  lifetext: {fileID: 1534436012}
 --- !u!1 &976949840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,7 +1575,7 @@ GameObject:
   - component: {fileID: 1171925977}
   - component: {fileID: 1171925980}
   - component: {fileID: 1171925979}
-  - component: {fileID: 1171925978}
+  - component: {fileID: 1171925981}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -1536,21 +1604,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1171925978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171925976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecbc1462945ea4e4eac69060b409670b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxValue: 100
-  currentValue: 100
-  lifetext: {fileID: 0}
 --- !u!114 &1171925979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1589,6 +1642,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171925976}
   m_CullTransparentMesh: 1
+--- !u!114 &1171925981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171925976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbc1462945ea4e4eac69060b409670b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxValue: 100
+  healthBar: {fileID: 1868461115}
+  modifiedBar: {fileID: 563690921}
+  changeSpeed: 1
+  lifetext: {fileID: 1359841143}
 --- !u!1 &1173509516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,7 +1851,7 @@ GameObject:
   - component: {fileID: 1263254267}
   - component: {fileID: 1263254270}
   - component: {fileID: 1263254269}
-  - component: {fileID: 1263254268}
+  - component: {fileID: 1263254271}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -1810,21 +1880,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1263254268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263254266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecbc1462945ea4e4eac69060b409670b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxValue: 100
-  currentValue: 100
-  lifetext: {fileID: 0}
 --- !u!114 &1263254269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1863,6 +1918,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263254266}
   m_CullTransparentMesh: 1
+--- !u!114 &1263254271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263254266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbc1462945ea4e4eac69060b409670b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxValue: 100
+  healthBar: {fileID: 1506979832}
+  modifiedBar: {fileID: 1617831622}
+  changeSpeed: 1
+  lifetext: {fileID: 1359841143}
 --- !u!1 &1273751148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1877,8 +1949,8 @@ GameObject:
   - component: {fileID: 1273751149}
   - component: {fileID: 1273751155}
   - component: {fileID: 1273751154}
-  - component: {fileID: 1273751157}
   - component: {fileID: 1273751153}
+  - component: {fileID: 1273751157}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2095,7 +2167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 100
-  currentValue: 100
+  healthBar: {fileID: 1173509517}
+  modifiedBar: {fileID: 2099271585}
+  changeSpeed: 1
   lifetext: {fileID: 1534436012}
 --- !u!1 &1359841142
 GameObject:
@@ -2348,7 +2422,7 @@ GameObject:
   - component: {fileID: 1551197676}
   m_Layer: 0
   m_Name: Scorpion
-  m_TagString: EnemyBullet
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2785,13 +2859,14 @@ GameObject:
   - component: {fileID: 1694046247}
   - component: {fileID: 1694046246}
   - component: {fileID: 1694046245}
-  - component: {fileID: 1694046249}
   - component: {fileID: 1694046251}
   - component: {fileID: 1694046252}
+  - component: {fileID: 1694046249}
+  - component: {fileID: 1694046253}
   - component: {fileID: 1694046250}
   m_Layer: 0
   m_Name: Ogre
-  m_TagString: EnemyBullet
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2988,6 +3063,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+--- !u!61 &1694046253
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694046244}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.3, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.31, y: 2.99}
+    newSize: {x: 3.31, y: 2.99}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.83, y: 2.86}
+  m_EdgeRadius: 0
 --- !u!1 &1824016649
 GameObject:
   m_ObjectHideFlags: 0

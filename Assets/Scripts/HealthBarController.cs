@@ -7,45 +7,73 @@ using Unity.VisualScripting;
 
 public class HealthBarController : MonoBehaviour
 {
-    public int maxValue = 100;
-    public int currentValue = 100;
+    [SerializeField] private int maxValue;
+    [Header("Health Bar Visual Components")]
+    [SerializeField] private RectTransform healthBar;
+    [SerializeField] private RectTransform modifiedBar;
+    [SerializeField] private float changeSpeed;
     public Text lifetext;
-
-    private static HealthBarController instance;
-
+    private int currentValue { get; set; }
+    private float _fullWidth;
+    private float TargetWidth => (float)currentValue * _fullWidth / maxValue;
+    private Coroutine updateHealthBarCoroutine;
+    public static HealthBarController instance;
     // Singleton
-    public static HealthBarController Instance
+    private void Start()
     {
-        get { return instance; }
+        currentValue = maxValue;
+        _fullWidth = healthBar.rect.width;
+        instance = this; // Configura el singleton
     }
-
-    private void Awake()
+    public static HealthBarController GetInstance()
     {
-        if (instance != null && instance != this)
-        {
-            // Si ya existe una instancia, destruye esta para asegurarte de que solo haya una.
-            Destroy(gameObject);
-            return;
-        }
-
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+        return instance;
     }
-
+    /// <summary>
+    /// Método <c>UpdateHealth</c> actualiza la vida del personaje de manera visual. Recibe una cantidad de vida modificada.
+    /// </summary>
+    /// <param name="amount">El valor de vida modificada. Puede ser positivo o negativo.</param>
     public void UpdateHealth(int amount)
     {
         currentValue = Mathf.Clamp(currentValue + amount, 0, maxValue);
+
+        if (updateHealthBarCoroutine != null)
+        {
+            StopCoroutine(updateHealthBarCoroutine);
+        }
+        updateHealthBarCoroutine = StartCoroutine(AdjustWidthBar(amount));
 
         if (currentValue <= 0)
         {
             Die();
         }
     }
-
-    private void Die()
+    IEnumerator AdjustWidthBar(int amount)
     {
+        RectTransform targetBar = amount >= 0 ? modifiedBar : healthBar;
+        RectTransform animatedBar = amount >= 0 ? healthBar : modifiedBar;
+
+        targetBar.sizeDelta = SetWidth(targetBar, TargetWidth);
+
+        while (Mathf.Abs(targetBar.rect.width - animatedBar.rect.width) > 1f)
+        {
+            animatedBar.sizeDelta = SetWidth(animatedBar, Mathf.Lerp(animatedBar.rect.width, TargetWidth, Time.deltaTime * changeSpeed));
+            yield return null;
+        }
+
+        animatedBar.sizeDelta = SetWidth(animatedBar, TargetWidth);
+    }
+
+    private Vector2 SetWidth(RectTransform t, float width)
+    {
+        return new Vector2(width, t.rect.height);
+    }
+    private void Die()
+{
+    // Si el objeto con este script es el jugador, destruirlo
+    if (gameObject.gameObject.tag == "Player")
         // Ejemplo: Si el objeto con este script es el jugador, destruirlo
-        if (gameObject.gameObject.tag=="Player")
+        if (gameObject.gameObject.tag == "Player")
         {
             Destroy(gameObject);
             if (lifetext != null)

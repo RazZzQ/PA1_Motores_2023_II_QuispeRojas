@@ -6,8 +6,6 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private int damage = 10; 
 
-    private HealthBarController playerHealthBar; 
-
     private static EnemyController instance; 
 
     private void Awake()
@@ -22,10 +20,10 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag =="Bullet")
+        if (collision.gameObject.tag =="Player")
         {
-            HealthBarController enemyHealthBar = HealthBarController.Instance;
-            enemyHealthBar.UpdateHealth(-damage);
+            HealthBarController PlayerHealt = HealthBarController.instance;
+            PlayerHealt.UpdateHealth(-damage);
         }
     }
 }

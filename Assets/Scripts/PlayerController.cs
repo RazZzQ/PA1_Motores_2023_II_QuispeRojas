@@ -17,12 +17,11 @@ public class PlayerController : MonoBehaviour
     public Transform firePoint;
     public float bulletSpeed = 10f;
     private bool singleShotMode = true;
-    private PlayerController jugador; // Agrega una referencia al jugador
+    private bool tripleshoot = true;
     private int jugadorNivel = 1; // Nivel inicial del jugador
     public Text nivelText; 
     private void Start()
     {
-        jugador = new PlayerController(); // Crea una instancia del jugador al inicio
         ActualizarTextoNivel();
     }
 
@@ -43,14 +42,21 @@ public class PlayerController : MonoBehaviour
             {
                 Shoot(shootDirection);
             }
-            else
-            {
-                ShootTriple(shootDirection);
-            }
         }
         if (Input.GetMouseButtonUp(0))
         {
             singleShotMode = !singleShotMode;
+        }
+        if(Input.GetMouseButtonDown(1))
+        {
+            if (tripleshoot)
+            {
+                ShootTriple(shootDirection);
+            }
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            tripleshoot = !tripleshoot;
         }
     }
     private void Shoot(Vector2 shootDirection)
@@ -72,18 +78,6 @@ public class PlayerController : MonoBehaviour
 
             Destroy(bullet, 2.0f);
         }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag=="EnemyBullet")
-        {
-            int damage = 10; 
-
-            HealthBarController playerHealthBar = HealthBarController.Instance;
-            playerHealthBar.UpdateHealth(-damage);
-            ScreenShake.instance.shakecamera(5f, 1f);
-        }
-        
     }
     public void AumentarNivel(int nivelGanado)
     {

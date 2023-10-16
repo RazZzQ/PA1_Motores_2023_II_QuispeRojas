@@ -8,6 +8,7 @@ TagManager:
   - PuntoB
   - EnemyBullet
   - Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
