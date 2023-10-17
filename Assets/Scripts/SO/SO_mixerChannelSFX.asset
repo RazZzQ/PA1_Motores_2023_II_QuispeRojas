@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14745fc5d0b6254db5eaee5999f78dd, type: 3}
   m_Name: SO_mixerChannelSFX
   m_EditorClassIdentifier: 
-  Mixer: {fileID: 0}
-  group: {fileID: 0}
-  AudioParameter: 
+  Mixer: {fileID: 24100000, guid: 3ac3dfc7f7c2e7a4688506a24f3cfecb, type: 2}
+  group: {fileID: 2834358722379483258, guid: 3ac3dfc7f7c2e7a4688506a24f3cfecb, type: 2}
+  AudioParameter: SFXvolume
