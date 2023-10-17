@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System;
 
 public class HealthBarController : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class HealthBarController : MonoBehaviour
     private float TargetWidth => (float)currentValue * _fullWidth / maxValue;
     private Coroutine updateHealthBarCoroutine;
     public static HealthBarController instance;
+    public AudioSource playeraudio;
+    public AudioClip Playerhurt;
+    public AudioClip lowlife;
+    public event Action onhit;
     // Singleton
     private void Start()
     {
@@ -42,7 +47,12 @@ public class HealthBarController : MonoBehaviour
             StopCoroutine(updateHealthBarCoroutine);
         }
         updateHealthBarCoroutine = StartCoroutine(AdjustWidthBar(amount));
-
+        ScreenShake.instance.shakecamera(5f, 1f);
+        playeraudio.PlayOneShot(Playerhurt);
+        if (currentValue < 40)
+        {
+            playeraudio.PlayOneShot(lowlife);
+        }
         if (currentValue <= 0)
         {
             Die();

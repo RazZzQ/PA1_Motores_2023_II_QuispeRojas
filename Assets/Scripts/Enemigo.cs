@@ -12,6 +12,8 @@ public class Enemigo : MonoBehaviour
     private Vector2 destino;
     private Rigidbody2D rb2d;
     public int nivelesOtorgados = 1;
+    public AudioSource audioenemy;
+    public AudioClip persecusion;
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -25,8 +27,8 @@ public class Enemigo : MonoBehaviour
         if (jugadorEnArea)
         {
             Vector2 direccion = (jugador.position - transform.position).normalized;
-
             rb2d.velocity = direccion * velocidad;
+
         }
         else if(enMovimiento)
         {
@@ -50,6 +52,7 @@ public class Enemigo : MonoBehaviour
         {
             jugadorEnArea = true;
             enMovimiento = false;
+            audioenemy.PlayOneShot(persecusion);
         }
     }
     void OnTriggerExit2D(Collider2D other)
@@ -59,6 +62,7 @@ public class Enemigo : MonoBehaviour
             jugadorEnArea = false;
             enMovimiento = true;
             destino = posicionInicial;
+            audioenemy.Stop();
         }
     }
 }

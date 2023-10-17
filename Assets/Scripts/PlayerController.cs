@@ -19,7 +19,11 @@ public class PlayerController : MonoBehaviour
     private bool singleShotMode = true;
     private bool tripleshoot = true;
     private int jugadorNivel = 1; // Nivel inicial del jugador
-    public Text nivelText; 
+    public Text nivelText;
+
+    public AudioSource playeraudio;
+    public AudioClip bulletClip;
+    public AudioClip treebulletSound;
     private void Start()
     {
         ActualizarTextoNivel();
@@ -41,6 +45,7 @@ public class PlayerController : MonoBehaviour
             if (singleShotMode)
             {
                 Shoot(shootDirection);
+                playeraudio.PlayOneShot(bulletClip);
             }
         }
         if (Input.GetMouseButtonUp(0))
@@ -52,6 +57,7 @@ public class PlayerController : MonoBehaviour
             if (tripleshoot)
             {
                 ShootTriple(shootDirection);
+                playeraudio.PlayOneShot(treebulletSound);
             }
         }
         if (Input.GetMouseButtonUp(1))
