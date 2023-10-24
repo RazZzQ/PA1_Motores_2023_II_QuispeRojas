@@ -132,6 +132,17 @@
                     "action": "MIra",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fada8529-886b-4825-a772-2aa3c5a95bdf",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MIra",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
